@@ -14,6 +14,10 @@ describe('PathPreviewComponent', () => {
 
     fixture = TestBed.createComponent(PathPreviewComponent);
     component = fixture.componentInstance;
+    component.x = 0;
+    component.y = 0;
+    component.width = 1;
+    component.height = 1;
     fixture.detectChanges();
   });
 
