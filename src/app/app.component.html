@@ -334,10 +334,16 @@
             <mat-icon *ngIf="!focusedItem">add</mat-icon>
         </button>
 
-        <label class="cursor-position" *ngIf="cursorPosition" >
-            {{cursorPosition.x.toFixed(cursorPosition.decimals)}},
-            {{cursorPosition.y.toFixed(cursorPosition.decimals)}}
-        </label>
+        <div class="cursor-position-container" *ngIf="cursorPosition || hoverPosition">
+            <label class="cursor-position selected" *ngIf="cursorPosition">
+                {{cursorPosition.x.toFixed(cursorPosition.decimals)}},
+                {{cursorPosition.y.toFixed(cursorPosition.decimals)}}
+            </label>
+            <label class="cursor-position hovered" *ngIf="hoverPosition">
+                {{hoverPosition.x.toFixed(hoverPosition.decimals)}},
+                {{hoverPosition.y.toFixed(hoverPosition.decimals)}}
+            </label>
+        </div>
 
         <button mat-mini-fab *ngIf="(focusedImage && !cfg.preview && !dragging)"
             color="accent"
