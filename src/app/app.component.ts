@@ -514,6 +514,10 @@ export class AppComponent implements AfterViewInit {
           behavior: 'smooth',
           block: 'nearest'
         });
+        const loc = this.focusedItem.targetLocation();
+        this.setCursorPosition({x: loc.x, y: loc.y, decimals: this.decimals});
+      } else {
+        this.setCursorPosition(undefined);
       }
     }
   }
