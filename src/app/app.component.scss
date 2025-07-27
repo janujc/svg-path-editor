@@ -202,16 +202,28 @@ textarea {
     }
 }
 
-label.cursor-position {
+.cursor-position-container {
     position: absolute;
-    font-size: 1.5em;
-    font-family: monospace;
     bottom:16px;
     left:50%;
     transform: translateX(-50%);
+    display:flex;
+    gap:8px;
+}
+
+label.cursor-position {
+    font-size: 1.5em;
+    font-family: monospace;
     padding:4px 16px;
-    background-color: rgba(255, 255, 255, 0.8);
     color:#111111;
     border-radius: 4px;
     pointer-events: none;
+}
+
+label.cursor-position.selected {
+    background-color: rgba(0, 174, 255, 0.8);
+}
+
+label.cursor-position.hovered {
+    background-color: rgba(255, 0, 0, 0.8);
 }

@@ -66,11 +66,22 @@ export class AppComponent implements AfterViewInit {
   // Dragged & hovered elements
   draggedPoint: SvgPoint | null = null;
   focusedItem: SvgItem | null = null;
-  hoveredItem: SvgItem | null = null;
+  _hoveredItem: SvgItem | null = null;
+  get hoveredItem(): SvgItem | null { return this._hoveredItem; }
+  set hoveredItem(value: SvgItem | null) {
+    this._hoveredItem = value;
+    if (this._hoveredItem) {
+      const loc = this._hoveredItem.targetLocation();
+      this.hoverPosition = {x: loc.x, y: loc.y, decimals: this.decimals};
+    } else {
+      this.hoverPosition = undefined;
+    }
+  }
   wasCanvasDragged = false;
   draggedIsNew = false;
   dragging = false;
-	cursorPosition?: Point & {decimals?: number};
+  cursorPosition?: Point & {decimals?: number};
+  hoverPosition?: Point & {decimals?: number};
 
   // Images
   images: Image[] = [];
@@ -514,6 +525,10 @@ export class AppComponent implements AfterViewInit {
           behavior: 'smooth',
           block: 'nearest'
         });
+        const loc = this.focusedItem.targetLocation();
+        this.setCursorPosition({x: loc.x, y: loc.y, decimals: this.decimals});
+      } else {
+        this.setCursorPosition(undefined);
       }
     }
   }

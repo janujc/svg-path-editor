@@ -238,6 +238,8 @@ export class CanvasComponent implements OnInit, OnChanges, AfterViewInit {
     }
     this.focusedItem = item.itemReference;
     this.draggedPoint = item;
+    // Display the position of the selected point as soon as it is selected
+    this.setCursorPosition({x: item.x, y: item.y, decimals: this.decimals});
   }
 
   startDragCanvas(event: MouseEvent | TouchEvent) {
@@ -259,7 +261,16 @@ export class CanvasComponent implements OnInit, OnChanges, AfterViewInit {
       this.drag(this.draggedEvt);
     }
     this.dragging.emit(false);
-    this.setCursorPosition(undefined);
+    let keptPosition = false;
+    if (this.draggedPoint) {
+      const {x, y} = this.draggedPoint;
+      this.setCursorPosition({x, y, decimals: this.decimals});
+      keptPosition = true;
+    } else if (this.focusedItem) {
+      const loc = this.focusedItem.targetLocation();
+      this.setCursorPosition({x: loc.x, y: loc.y, decimals: this.decimals});
+      keptPosition = true;
+    }
 
     if (!this.draggedPoint && !this.wasCanvasDragged) {
       // unselect action
@@ -274,6 +285,9 @@ export class CanvasComponent implements OnInit, OnChanges, AfterViewInit {
     this.dragWithoutClick = true;
 
     this.draggedImage = null;
+    if (!keptPosition) {
+      this.setCursorPosition(undefined);
+    }
   }
 
   drag(event: MouseEvent | TouchEvent) {
